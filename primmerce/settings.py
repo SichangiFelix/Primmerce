@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #custom apps
     'core',
-    'userauth',
+    'userauths',
 ]
 
 MIDDLEWARE = [
@@ -136,4 +136,4 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Welcome to Primmerce",
 }
 
-AUTH_USER_MODEL = 'userauth.User'
+AUTH_USER_MODEL = 'userauths.User'
