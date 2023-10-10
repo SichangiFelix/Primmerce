@@ -3,6 +3,9 @@ from .forms import UserRegisterForm
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
 
 # Create your views here.
 @csrf_protect
@@ -25,3 +28,31 @@ def register_view(request):
         'form' : form,
     }
     return render(request, "userauths/sign-up.html", context)
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect("core:index")
+
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        try:
+            user = User.objects.get(email = email)
+        except:
+            messages.warning(request, f"User with {email} does not exist!")
+        
+        user = authenticate(request, email = email, password = password)
+
+        if user:
+            login(request, user)
+            messages.success(request, f"Successfuly logged in!")
+            return redirect("core:index")
+        else:
+            messages.warning(request, "User does not exist, create an account")
+
+    context = {
+
+    }
+
+    return render(request, "userauths/sign-in.html", context)
