@@ -38,8 +38,27 @@ def category_product_list_view(request, cid):
     return render(request, 'core/category-product-list.html', context)
 
 def vendor_list_view(request):
-    vendor = Vendor.objects.all()
+    vendors = Vendor.objects.all()
     context = {
-        "vendor": vendor
+        "vendors": vendors
     }
     return render(request, "core/vendor-list.html", context)
+
+def vendor_detail_view(request, vid):
+    vendor = Vendor.objects.get(vid = vid)
+    products = Product.objects.filter(vendor = vendor, product_status="published")
+    categories = Category.objects.all()
+    context = {
+        "vendor": vendor,
+        "products": products,
+        "categories": categories
+    }
+    return render(request, "core/vendor-detail.html", context )
+
+def product_detail_view(request, pid):
+    product = Product.objects.get(pid = pid)
+    context = {
+        "product": product
+    }
+
+    return render(request, 'core/product-detail.html', context)
