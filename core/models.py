@@ -51,6 +51,7 @@ class Vendor(models.Model):
     vid = ShortUUIDField(unique=True, length = 10, max_length=30, prefix="ven", alphabet="abcdefgh12345")
     title = models.CharField(max_length=100, default="Nestify")
     image = models.ImageField(upload_to = user_directory_path, default="Vendor.jpg")
+    cover_image = models.ImageField(upload_to = user_directory_path, default="Vendor.jpg")
     description = models.TextField(null=True, blank=True, default="I am an amazing vendor")
 
     address = models.CharField(max_length=100, default="123 Main Street.")
@@ -62,6 +63,7 @@ class Vendor(models.Model):
     warranty_period = models.CharField(max_length=100, default="100")
      
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True) 
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Vendors"
@@ -80,7 +82,7 @@ class Product(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="category")
-    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, related_name="product")
 
     price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="1.99")
     old_price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="2.99")
