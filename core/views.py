@@ -1,7 +1,9 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from core.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, Wishlist, Address
 from taggit.models import Tag
+from django.db.models import Avg
+from core.forms import ProductReviewForm
 
 
 # Create your views here.
@@ -59,10 +61,19 @@ def vendor_detail_view(request, vid):
 def product_detail_view(request, pid):
     product = Product.objects.get(pid = pid)
     products = Product.objects.filter(category = product.category).exclude(pid = pid)
+    reviews = ProductReview.objects.filter(product = product).order_by("-date")
+    average_rating = ProductReview.objects.filter(product = product).aggregate(rating = Avg('rating'))
     p_images = product.p_images.all()
+
+    #review form
+    review_form = ProductReviewForm()
+
     context = {
         "product": product,
         "p_images": p_images,
+        "reviews": reviews,
+        "review_form": review_form,
+        "average_rating": average_rating,
         "products": products
     }
 
@@ -81,3 +92,30 @@ def tag_list(request, tag_slug = None):
     }
 
     return render(request, "core/tag.html", context)
+
+def ajax_add_review(request, pid):
+    product = Product.objects.get(pid = pid)
+    user = request.user
+
+    review = ProductReview.objects.create(
+        user = user,
+        product = product,
+        review = request.POST['review'],
+        rating = request.POST['rating'],
+    )
+
+    context = {
+        'user': user.username,
+        'review': request.POST['review'],
+        'rating': request.POST['rating'],
+    }
+
+    average_reviews = ProductReview.objects.filter(product = product).aggregate(rating = Avg("rating"))
+
+    return JsonResponse(
+            {
+            'bool': True,
+            'context': context,
+            'average_reviews': average_reviews
+        }
+    )
