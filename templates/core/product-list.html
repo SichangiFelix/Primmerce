@@ -26,14 +26,16 @@
                                     <h5 class="mb-30">By Categories</h5>
                                     <div class="categories-dropdown-wrap font-heading">
                                         <ul>
+
                                         {% for c in categories %}
                                             <li>
-                                                <input class="form-check-input filter-checkbox" type="checkbox" name="checkbox" id="exampleCheckbox1" value="c.cid"/>
+                                                <input class="form-check-input filter-checkbox" type="checkbox" name="checkbox" id="exampleCheckbox2" value="c.id"/>
                                                 &nbsp;&nbsp;
                                                 <a href="shop-grid-right.html"> <img
                                                         src="{{ c.image.url }}" alt="" />{{c.title}}</a>
                                             </li>
                                         {% endfor %}
+
                                         </ul>
                                     </div>
                                 </div>
@@ -42,11 +44,11 @@
                                 <div class="card">
                                     <h5 class="mb-30">By Vendors</h5>
                                     <div class="d-flex">
-                                        <div class="custome-checkbox mr-80">
+                                        <div class="customeee-checkbox mr-80">
 
                                             {% for v in vendors %}
-                                            <input class="form-check-input filter-checkbox" type="checkbox" name="checkbox"
-                                                id="exampleCheckbox1" value="v.vid" />
+                                            <input class="form-check-input filter-checkbox" data-filter="vendor" type="checkbox" name="checkbox"
+                                                id="exampleCheckbox1" value="v.id" />
                                             <label class="form-check-label"
                                                 for="exampleCheckbox1"><span>{{v.title}}</span></label>
                                             <br />
