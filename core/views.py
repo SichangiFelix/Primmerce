@@ -102,6 +102,8 @@ def tag_list(request, tag_slug = None):
     return render(request, "core/tag.html", context)
 
 def ajax_add_review(request, pid):
+    
+
     product = Product.objects.get(pid = pid)
     user = request.user
 
@@ -127,3 +129,14 @@ def ajax_add_review(request, pid):
             'average_reviews': average_reviews
         }
     )
+
+def search_view(request):
+    query = request.GET.get("q")
+    products = Product.objects.filter(title__icontains = query, description__icontains = query).order_by("-date")
+
+    context = {
+        "products": products,
+        "query": query,
+    }
+
+    return render(request, "core/search.html", context)
