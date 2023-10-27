@@ -76,8 +76,10 @@ def product_detail_view(request, pid):
         if user_review_count > 0:
             make_review = False
 
+    p_image = product.p_images.all()
+
     context = {
-        "product": product,
+        "p": product,
         "p_images": p_images,
         "make_review": make_review,
         "reviews": reviews,

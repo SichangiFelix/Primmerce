@@ -139,7 +139,7 @@ $(".add-to-cart-btn").on("click", function(){
     let product_price = $(".current-product-price-" + index).text()
 
     let product_pid = $(".product-pid-" + index).val()
-    let product_image = $(".product-image-" + index)
+    let product_image = $(".product-image-" + index).val()
 
 
 
@@ -167,11 +167,11 @@ $(".add-to-cart-btn").on("click", function(){
             console.log("Adding Product to Cart...");
         },
         success: function(response){
-            //this_val.html("Tick...lol")
-            this_val.html("<i class='fas fa-check-circle'></i>")
+            //this_val.html("<i class='fas fa-check-circle'></i>");
+            this_val.html("Added Product to cart!");
 
             console.log("Added Product to Cart!");
-            $(".cart-items.count").text(response.totalcartitems)
+            $(".cart-items-count").text(response.totalcartitems)
         },
     })
 })
