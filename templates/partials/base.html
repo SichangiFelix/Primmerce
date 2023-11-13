@@ -210,23 +210,16 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="index.html"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
+                        <a href="{% url 'core:index' %}"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
                             <form action="{% url 'core:search' %}" method="GET">
                                 <select class="select-active">
                                     <option>All Categories</option>
-                                    <option>Milks and Dairies</option>
-                                    <option>Wines & Alcohol</option>
-                                    <option>Clothing & Beauty</option>
-                                    <option>Pet Foods & Toy</option>
-                                    <option>Fast food</option>
-                                    <option>Baking material</option>
-                                    <option>Vegetables</option>
-                                    <option>Fresh Seafood</option>
-                                    <option>Noodles & Rice</option>
-                                    <option>Ice cream</option>
+                                    {% for c in categories %}
+                                    <option>{{c.title}}</option>
+                                    {% endfor %}
                                 </select>
                                 <input type="text" placeholder="Search for items..." name="q"/>
                                 <buton class="fas fa-search" type="Submit"></buton>
@@ -366,7 +359,7 @@
                             <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                                 <div class="d-flex categori-dropdown-inner">
                                     <ul>
-                                        {% for c in categories%}
+                                        {% for c in categories %}
                                         <li>
                                             <a href="{% url 'core:category-product-list' c.cid %}"> <img
                                                     src="{{ c.image.url }}"
@@ -377,7 +370,7 @@
                                     </ul>
                                    
                                 </div>
-                                <div class="more_slide_open" style="display: none">
+                                <!-- <div class="more_slide_open" style="display: none">
                                     <div class="d-flex categori-dropdown-inner">
                                         <ul>
                                             <li>
@@ -410,7 +403,7 @@
                                     </div>
                                 </div>
                                 <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">Show
-                                        more...</span></div>
+                                        more...</span></div> -->
                             </div>
                         </div>
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
@@ -419,14 +412,10 @@
                                     <li class="hot-deals"><img src="{% static 'assets/imgs/theme/icons/icon-hot.svg' %}"
                                             alt="hot deals" /><a href="shop-grid-right.html">Deals</a></li>
                                     <li>
-                                        <a class="active" href="index.html">Home <i class="fi-rs-angle-down"></i></a>
+                                        <a class="active" href="{% url 'core:index' %}">Home <i class="fi-rs-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             <li><a href="index.html">Home 1</a></li>
-                                            <li><a href="index-2.html">Home 2</a></li>
-                                            <li><a href="index-3.html">Home 3</a></li>
-                                            <li><a href="index-4.html">Home 4</a></li>
-                                            <li><a href="index-5.html">Home 5</a></li>
-                                            <li><a href="index-6.html">Home 6</a></li>
+                                        
                                         </ul>
                                     </li>
                                     <li>
